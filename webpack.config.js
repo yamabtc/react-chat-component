@@ -1,30 +1,31 @@
 var path = require('path');
 
 module.exports = {
-  entry: {
-    'example/compiled/index': './example/src/index'
-  },
-
+  entry: './src/index',
   output: {
-    path: '.',
-    filename: '[name].js',
-    publicPath: '/example/compiled/',
+    path: path.join(__dirname),
+    filename: 'example/index.js',
+    publicPath: '/example/compiled/'
   },
 
   module: {
     loaders: [
       {
-        test: [/\.jsx?$/, /\.js?$/]
+        test: [/\.jsx?$/, /\.js?$/],
         exclude: /node_modules/,
-        loader: 'babel'
-      },
-    ],
+        loader: 'babel-loader'
+      }
+    ]
   },
 
   devServer: {
     contentBase: './example',
     host: 'localhost',
     inline: true,
-    info: false,
+    info: false
   },
+  devtool: 'source-maps',
+  resolve: {
+    extensions: ['.js', '.jsx' ]
+  }
 };
