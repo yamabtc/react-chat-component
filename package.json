@@ -5,7 +5,7 @@
   "description": "A chat component for React.",
   "main": "dist-modules/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist-modules && webpack --colors --progress -p",
+    "build": "webpack --colors --progress -p",
     "dev": "webpack --watch"
   },
   "keywords": [

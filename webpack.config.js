@@ -1,10 +1,13 @@
 var path = require('path');
 
 module.exports = {
-  entry: './src/index',
+  entry: {
+    './example/index': './src/index',
+    './dist/index': './src/index'
+  },
   output: {
     path: path.join(__dirname),
-    filename: 'example/index.js',
+    filename: '[name].js',
     publicPath: '/example/compiled/'
   },
 
