@@ -1,6 +1,6 @@
 {
   "name": "react-chat-component",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Dev <dev@appacademy.io>",
   "description": "A chat component for React.",
   "main": "dist-modules/index.js",
@@ -19,7 +19,7 @@
     "url": "git@github.com:appacademy/react-chat-component.git"
   },
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
