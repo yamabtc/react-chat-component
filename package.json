@@ -1,9 +1,9 @@
 {
   "name": "react-chat-component",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Dev <dev@appacademy.io>",
   "description": "A chat component for React.",
-  "main": "dist-modules/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "webpack --colors --progress -p",
     "dev": "webpack --watch"
