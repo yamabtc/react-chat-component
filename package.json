@@ -1,6 +1,6 @@
 {
   "name": "react-chat-component",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Dev <dev@appacademy.io>",
   "description": "A chat component for React.",
   "main": "dist/index.js",
