@@ -8,7 +8,10 @@ module.exports = {
   output: {
     path: path.join(__dirname),
     filename: '[name].js',
-    publicPath: '/example/compiled/'
+    publicPath: '/example/compiled/',
+    // library: 'library',
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
 
   module: {
