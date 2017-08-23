@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+
+window.React = React;
+window.ReactDOM = ReactDOM;
 
 class Chat extends React.Component {
   constructor(props) {
