@@ -1,7 +1,7 @@
 /* global $ */
 // Wrapper for applozic API
 import merge from 'lodash/merge';
-import ajax from './helpers';
+import {ajax} from './helpers';
 
 const USERNAME = 'dev@appacademy.io';
 const PASSWORD = '8#EgGmNyCGGi#5rQAY3W';
@@ -28,7 +28,7 @@ export const register = (params, callback) => {
   ajax({
      url: 'https://apps.applozic.com/rest/ws/register/client',
      headers: applozicHeaders,
-     type: 'POST',
+     method: 'POST',
      data: JSON.stringify(registerParams(params)),
      success: (response) => {
       callback(response);
@@ -44,11 +44,10 @@ const userDetailParams = (params) => ({
 });
 
 export const updateUserDetails = (params, deviceKey, callback) => {
-  debugger
   $.ajax({
      url: 'https://apps.applozic.com/rest/ws/user/update',
      headers: merge(applozicHeaders, {'Device-Key': deviceKey, 'UserId-Enabled': 'true'}),
-     type: 'POST',
+     method: 'POST',
      data: JSON.stringify(userDetailParams(params)),
      success: (response) => {
       callback(response);

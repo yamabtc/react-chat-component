@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import {register} from './applozic';
 
 window.React = React;
 window.ReactDOM = ReactDOM;
@@ -7,6 +8,12 @@ window.ReactDOM = ReactDOM;
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+    register({
+      userId: 'test',
+      displayName: 'test',
+      imageLink: 'test',
+      email: 'test'
+    }, (data) => console.log(data));
   }
 
   render() {

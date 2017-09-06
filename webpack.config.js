@@ -2,7 +2,6 @@ var path = require('path');
 
 module.exports = {
   entry: {
-    './example/index': './src/index',
     './dist/index': './src/index'
   },
   output: {
