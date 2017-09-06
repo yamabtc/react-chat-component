@@ -10626,6 +10626,8 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _applozic = __webpack_require__(214);
 
+var _applozic2 = _interopRequireDefault(_applozic);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10645,8 +10647,10 @@ var Chat = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).call(this, props));
 
+    _this.applozic = new _applozic2.default(props.appID);
+
     (0, _applozic.register)({
-      userId: 'test',
+      userId: 'Kevin',
       displayName: 'test',
       imageLink: 'test',
       email: 'test'
@@ -23322,7 +23326,10 @@ module.exports = ReactDOMInvalidARIAHook;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateUserDetails = exports.register = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* global $ */
+// Wrapper for applozic API
+
 
 var _merge = __webpack_require__(215);
 
@@ -23332,63 +23339,76 @@ var _helpers = __webpack_require__(283);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* global $ */
-// Wrapper for applozic API
-var USERNAME = 'dev@appacademy.io';
-var PASSWORD = '8#EgGmNyCGGi#5rQAY3W';
-var applicationId = 'appacademy547072c1772f9a81bfbd6e24d9c94ebf';
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var applozicHeaders = {
-  'Apz-AppId': 'appacademy547072c1772f9a81bfbd6e24d9c94ebf',
-  Authorization: 'Basic ' + btoa(USERNAME + ':' + PASSWORD),
-  'Content-Type': 'application/json'
-};
+var Applozic = function () {
+  // learn exactly how Applozic is registering users Admin/User
+  function Applozic(appID, userId, deviceKey) {
+    _classCallCheck(this, Applozic);
 
-var registerParams = function registerParams(params) {
-  return {
-    userId: params.userId,
-    displayName: params.displayName,
-    deviceType: '4',
-    applicationId: applicationId,
-    imageLink: params.imageLink,
-    email: params.email
-  };
-};
+    this.appId = appID;
+    this.headers = {
+      'Apz-AppId': 'appacademy547072c1772f9a81bfbd6e24d9c94ebf',
+      Authorization: 'Basic ' + btoa(userId + ':' + deviceKey),
+      'Content-Type': 'application/json'
+    };
+  }
 
-// Get more options from Docs
-// required: userId, displayName, deviceType
-var register = exports.register = function register(params, callback) {
-  (0, _helpers.ajax)({
-    url: 'https://apps.applozic.com/rest/ws/register/client',
-    headers: applozicHeaders,
-    method: 'POST',
-    data: JSON.stringify(registerParams(params)),
-    success: function success(response) {
-      callback(response);
+  _createClass(Applozic, [{
+    key: '_registerParams',
+    value: function _registerParams(_ref) {
+      var userId = _ref.userId,
+          displayName = _ref.displayName,
+          imageLink = _ref.imageLink,
+          email = _ref.email;
+
+      return {
+        userId: userId,
+        displayName: displayName,
+        deviceType: '4',
+        applicationId: this.appID,
+        imageLink: imageLink,
+        email: email
+      };
     }
-  });
-};
 
-// May be used also for status message
-var userDetailParams = function userDetailParams(params) {
-  return {
-    email: params.email,
-    imageLink: params.imageLink,
-    ofUserId: params.userId
-  };
-};
+    // required: userId, displayName, deviceType
 
-var updateUserDetails = exports.updateUserDetails = function updateUserDetails(params, deviceKey, callback) {
-  $.ajax({
-    url: 'https://apps.applozic.com/rest/ws/user/update',
-    headers: (0, _merge2.default)(applozicHeaders, { 'Device-Key': deviceKey, 'UserId-Enabled': 'true' }),
-    method: 'POST',
-    data: JSON.stringify(userDetailParams(params)),
-    success: function success(response) {
-      callback(response);
+  }, {
+    key: 'register',
+    value: function register(params, _success, _error) {
+      (0, _helpers.ajax)({
+        url: 'https://apps.applozic.com/rest/ws/register/client',
+        headers: this.headers,
+        method: 'POST',
+        body: this._registerParams(params),
+        success: function success(response) {
+          _success(response);
+        },
+        error: function error(response) {
+          _error(response);
+        }
+      });
     }
-  });
-};
+  }, {
+    key: 'updateUserDetails',
+    value: function updateUserDetails(params, deviceKey, callback) {
+      (0, _helpers.ajax)({
+        url: 'https://apps.applozic.com/rest/ws/user/update',
+        headers: (0, _merge2.default)(this.headers, { 'Device-Key': deviceKey, 'UserId-Enabled': 'true' }),
+        method: 'POST',
+        data: params,
+        success: function success(response) {
+          callback(response);
+        }
+      });
+    }
+  }]);
+
+  return Applozic;
+}();
+
+exports.default = Applozic;
 
 /***/ }),
 /* 215 */
@@ -25601,8 +25621,8 @@ var ajax = exports.ajax = function ajax(options) {
     }
   };
 
-  if (options.data) {
-    request.send(JSON.stringify(options.data));
+  if (options.body) {
+    request.send(JSON.stringify(options.body));
   } else {
     request.send();
   }

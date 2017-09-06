@@ -18,8 +18,8 @@ export const ajax = options => {
     }
   };
 
-  if (options.data) {
-    request.send(JSON.stringify(options.data));
+  if (options.body) {
+    request.send(JSON.stringify(options.body));
   } else {
     request.send();
   }
